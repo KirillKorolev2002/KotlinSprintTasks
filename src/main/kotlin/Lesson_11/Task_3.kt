@@ -1,53 +1,47 @@
 package Lesson_11
 
 fun main() {
-    val user = User2(
-        id = "@kirillkorolev2002",
-        login = 4040,
-        password = "Losost",
-        mail = "kirillkorolev2002@mail.ru",
-        bio = " "
+    val memberFirst = Member(
+        name = "Кирилл Королев",
+        avatar = "png",
+        status = "разговаривает",
     )
 
-    user.enterBio()
-
-    val passwordChanged = false
-    while (passwordChanged == user.changePassword()) {
-        user.changePassword()
-    }
-
-    println(user.userToString())
+    val memberSecond = Member(
+        name = "Иван Ветров",
+        avatar = "jpg",
+        status = "микрофон выключен",
+    )
+    val room = Room(
+        cover = "png",
+        nameOfRoom = " "
+    )
+    room.addMembers(memberFirst)
+    room.addMembers(memberSecond)
+    room.updateStatus("Кирилл Королев", "пользователь заглушен")
+    println(room.members.toString())
 }
 
-class User2(
-    var id: String = " ",
-    var login: Int = 0,
-    var password: String = " ",
-    var mail: String = " ",
-    var bio: String = " ",
+class Member(
+    val name: String,
+    val avatar: String,
+    var status: String,
+)
+
+class Room(
+    val cover: String,
+    val nameOfRoom: String,
+    val members: MutableList<Member> = mutableListOf(),
 ) {
-    fun userToString(): String {
-        return "ID: $id, Login: $login, Password: $password, Mail: $mail, Bio: $bio"
+    fun addMembers(member: Member) {
+        members.add(member)
     }
-
-    fun enterBio(): String {
-        println("Введите информацию о себе:")
-        bio = readln()
-        return bio
-    }
-
-    fun changePassword(): Boolean {
-        println("Введите текущий пароль:")
-        val currentPassword = readln()
-        return if (currentPassword == password) {
-            println("Введите новый пароль:")
-            val newPassword = readln()
-            password = newPassword
-            println("Пароль изменен")
-            true
+    fun updateStatus(memberName: String, newStatus: String) {
+        val member = members.find { it.name == memberName }
+        if (member != null) {
+            member.status = newStatus
         } else {
-            println("Неверный текущий пароль.")
-            false
+            println("Участник не найден.")
         }
     }
 }
