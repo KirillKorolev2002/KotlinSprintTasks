@@ -1,20 +1,19 @@
 package Lesson_3
 
 fun main() {
-    val theFirstNumber = readln().toInt()
+    val theStepFrom = "E2"
+    val theStepOn = "E4"
+    val theNumberOfStep = 1
 
+    val sentOnServer = "$theStepFrom-$theStepOn;$theNumberOfStep"
 
-    val theTitle = """
-    $theFirstNumber*1=${theFirstNumber * 1}
-    $theFirstNumber*2=${theFirstNumber * 2}
-    $theFirstNumber*3=${theFirstNumber * 3}
-    $theFirstNumber*4=${theFirstNumber * 4}
-    $theFirstNumber*5=${theFirstNumber * 5}
-    $theFirstNumber*6=${theFirstNumber * 6}
-    $theFirstNumber*7=${theFirstNumber * 7}
-    $theFirstNumber*8=${theFirstNumber * 8}
-    $theFirstNumber*9=${theFirstNumber * 9}
-    """.trimIndent()
+    println(sentOnServer)
 
-    println(theTitle)
+    val theNewStepFrom = "D2"
+    val theNewStepOn = "D3"
+    val theNewNumberOfStep = 2
+
+    val newSentOnServer = "$theNewStepFrom-$theNewStepOn;$theNewNumberOfStep"
+
+    println(newSentOnServer)
 }
