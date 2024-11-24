@@ -1,4 +1,4 @@
-package Leeson_4
+package Lesson_4
 
 fun main() {
     val reservedTablesToday = 13
