@@ -1,31 +1,56 @@
 package Lesson_5
+import kotlin.math.pow
+fun main() {
+    val personKiriiKorolev = PersonInformation(90.0, Weight.KILOGRAMS, 1.83, Height.METERS)
+    personKiriiKorolev.printBMIInfo()
 
-/**
- * Калькулятор ИМТ
- *
- * Создай консольное приложение на Kotlin, которое будет
- * рассчитывать индекс массы тела (ИМТ) пользователя и
- * определять категорию веса на основе полученного значения.
- *
- * Запроси у пользователя его вес (в килограммах) и рост
- * (в сантиметрах). Вес и рост должны быть переменными типа Double или Float.
- *
- * Преобразуй рост из сантиметров в метры. Используя формулу
- * ИМТ, рассчитай индекс массы тела: ИМТ = масса тела в кг /
- * рост в метрах в квадрате.
- *
- * Используй условные операторы для определения категории
- * ИМТ и выведи сообщение с результатом:
- *
- * - ИМТ < 18.5: Недостаточная масса тела
- *
- * - 18.5 ≤ ИМТ < 25: Нормальная масса тела
- *
- * - 25 ≤ ИМТ < 30: Избыточная масса тела
- *
- * - ИМТ ≥ 30: Ожирение
- *
- * В конце программа должна вывести рассчитанный ИМТ
- * с точностью до двух знаков после запятой и
- * соответствующую категорию веса.
- */
+    val person2 = PersonInformation(100.0, Weight.KILOGRAMS, 1.80, Height.METERS)
+    person2.printBMIInfo()
+}
+
+enum class Weight { KILOGRAMS, GRAMS }
+enum class Height { METERS, CENTIMETERS }
+
+data class PersonInformation(
+    val weight: Double,
+    val weightUnit: Weight,
+    val height: Double,
+    val heightUnit: Height,
+) {
+    val weightInKgs: Double
+        get() = when (weightUnit) {
+            Weight.KILOGRAMS -> weight
+            Weight.GRAMS -> weight / GRAMMES_IN_KILOGRAMMES
+        }
+
+    val heightInMeters: Double
+        get() = when (heightUnit) {
+            Height.METERS -> height
+            Height.CENTIMETERS -> height / CENTIMETERS_IN_METERS
+        }
+
+    fun bodyMassIndex(): Double {
+        return weightInKgs / heightInMeters.pow(2.0)
+    }
+
+    fun getBMICategory(): String {
+        val bmi = bodyMassIndex()
+        return when {
+            bmi < 18.5 -> "Недостаточная масса тела"
+            bmi < 25 -> "Нормальная масса тела"
+            bmi < 30 -> "Избыточная масса тела"
+            else -> "Ожирение"
+        }
+    }
+    fun printBMIInfo() {
+        val resultBmi = getBMICategory()
+        val formattedBMI = String.format("%.2f", resultBmi)
+        println("BMI: $formattedBMI")
+    }
+}
+const val GRAMMES_IN_KILOGRAMMES: Double = 1000.0
+const val CENTIMETERS_IN_METERS: Double  = 100.0
+
+
+
+
